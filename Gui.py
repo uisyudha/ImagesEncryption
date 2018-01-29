@@ -126,9 +126,9 @@ class Ui_MainWindow(object):
         self.pushButtonSrcFile.setText(_translate("MainWindow", "Browse"))
         self.pushButtonDstFile.setText(_translate("MainWindow", "Browse"))
         self.keyLabel_2.setText(_translate("MainWindow", "Key"))
-        self.label_4.setText(_translate("MainWindow", "E.g. : 0x00000000000000000000"))
+        self.label_4.setText(_translate("MainWindow", "E.g. : 00000000000000000000"))
         self.iVLabel_2.setText(_translate("MainWindow", "IV"))
-        self.label_6.setText(_translate("MainWindow", "E.g. : 0x0000000000000000"))
+        self.label_6.setText(_translate("MainWindow", "E.g. : 0000000000000000"))
         self.label_2.setText(_translate("MainWindow", "Destination"))
         self.pushButtonEncrypt.setText(_translate("MainWindow", "Encrypt"))
         self.pushButtonDecrypt.setText(_translate("MainWindow", "Decrypt"))
@@ -157,19 +157,9 @@ class Ui_MainWindow(object):
         iv = self.lineEditIV.text()
         file = self.lineEditSrcFile.text()
         outfile = self.lineEditDstFile.text()
+        self.progressBar.setValue(0)
 
-        # Initialize Grain
-        KEY = BitArray(key)
-        #print "Key : ", KEY.hex
-        KEY.byteswap()
-        KEY = map(int, KEY.bin)
-
-        IV = BitArray(iv)
-        #print "IV : ", IV.hex
-        IV.byteswap()
-        IV = map(int, IV.bin)
-
-        grain = Grain(KEY, IV)
+        grain = Grain(key, iv)
 
         # Images proccesing
         images = cv2.imread(file, cv2.IMREAD_COLOR)
@@ -193,19 +183,9 @@ class Ui_MainWindow(object):
         iv = self.lineEditIV.text()
         file = self.lineEditSrcFile.text()
         outfile = self.lineEditDstFile.text()
+        self.progressBar.setValue(0)
 
-        # Initialize Grain
-        KEY = BitArray(key)
-        #print "Key : ", KEY.hex
-        KEY.byteswap()
-        KEY = map(int, KEY.bin)
-
-        IV = BitArray(iv)
-        #print "IV : ", IV.hex
-        IV.byteswap()
-        IV = map(int, IV.bin)
-
-        grain = Grain(KEY, IV)
+        grain = Grain(key, iv)
 
         # Images proccesing
         images = cv2.imread(file, cv2.IMREAD_COLOR)

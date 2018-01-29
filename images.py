@@ -12,23 +12,12 @@ class Images:
         self.row = self.img.shape[0]
         self.col = self.img.shape[1]
 
-        # Initiate grain
-        KEY = BitArray(key)
-        #print "Key : ", KEY.hex
-        KEY.byteswap()
-        KEY = map(int, KEY.bin)
-
-        IV = BitArray(iv)
-        #print "IV : ", IV.hex
-        IV.byteswap()
-        IV = map(int, IV.bin)
-
-        self.grain = Grain(KEY, IV)
+        self.grain = Grain(key, iv)
 
     def encrypt(self, outfile):
         for i in range(self.row):
             for j in range(self.col):
-                #print "Proccessing pixel [{}][{}]".format(i, j)
+                print "Proccessing pixel [{}][{}]".format(i, j)
                 self.img[i][j] = self.grain.encrypt(self.img[i][j])
 
         cv2.imwrite(outfile, self.img)
@@ -36,17 +25,17 @@ class Images:
     def decrypt(self, outfile):
         for i in range(self.row):
             for j in range(self.col):
-                #print "Proccessing pixel [{}][{}]".format(i, j)
+                print "Proccessing pixel [{}][{}]".format(i, j)
                 self.img[i][j] = self.grain.decrypt(self.img[i][j])
 
         cv2.imwrite(outfile, self.img)
 
 
-#image = Images("TestVector/kodim02.png", "0x00000000000000000000", "0x0000000000000000")
+#image = Images("TestVector/kodim02.png", "00000000000000000000", "0000000000000000")
 #image.encrypt("cipher02.png")
 
-#image = Images("cipher02.png", "0x00000000000000000000", "0x0000000000000000")
-#image.decrypt("plain02.png")
+image = Images("cipher02.png", "00000000000000000000", "0000000000000000")
+image.decrypt("plain02.png")
 
 
 """
